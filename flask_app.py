@@ -1,21 +1,21 @@
 
 # A very simple Flask Hello World app for you to get started with...
 
-from flask import Flask, request, redirect, make_response, abort
+from flask import Flask, request, redirect, make_response, abort, render_template
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return '<h1>Hello World!</h1>'
-@app.route('/user/<name>')
-def user(name):
-    return '<h1>Hello, {}!</h1>'.format(name)
+    return render_template('index.html')
+@app.route('/user/<name>/<prontuario>/<inst>')
+def user(name, prontuario, inst):
+    return render_template('identificacao.html', aluno = name, prontuario = prontuario, inst = inst)
 
 @app.route('/contextorequisicao')
 def contextorequisicao():
     user_agent = request.headers.get('User-Agent')
-    return '<p>Your browser is {}</p>'.format(user_agent)
+    return render_template('contexto.html', navegador = user_agent, ip = request.remote_addr, host = request.url)
 
 @app.route('/redirecionamento')
 def redirecionamento():

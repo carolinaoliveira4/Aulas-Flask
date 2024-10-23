@@ -14,9 +14,9 @@ moment = Moment(app)
 def index():
     return render_template('index.html', current_time=datetime.utcnow())
 
-@app.route('/user/<user>')
-def hello_user(user):
-    return render_template('user.html', user = user)
+@app.route('/user/<user>/<prontuario>/<inst>')
+def identificacao(user, prontuario, inst):
+    return render_template('user.html', user = user, prontuario = prontuario, inst = inst)
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -26,10 +26,10 @@ def page_not_found(e):
 def internal_server_error(e):
  return render_template('500.html'), 500
 
-# @app.route('/contextorequisicao')
-# def contextorequisicao():
-#     user_agent = request.headers.get('User-Agent')
-#     return render_template('contexto.html', navegador = user_agent, ip = request.remote_addr, host = request.url)
+@app.route('/contextorequisicao/<user>')
+def contextorequisicao(user):
+    user_agent = request.headers.get('User-Agent')
+    return render_template('contexto.html', user = user, navegador = user_agent, ip = request.remote_addr, host = request.url)
 
 # @app.route('/redirecionamento')
 # def redirecionamento():

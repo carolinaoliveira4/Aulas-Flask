@@ -13,11 +13,13 @@
         <div class="navbar navbar-inverse" role="navigation">
             <div class="container">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="{{url_for('index')}}">Flasky</a>
+                    <a class="navbar-brand" href="{{url_for('index')}}">Avaliação Contínua: <b>Aula 040</b></a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li><a href="{{url_for('index')}}">Home</a></li>
+                        <li><a href="{{url_for('identificacao', user = 'cah204', prontuario = 'PT3026108', inst= 'IFSP')}}">Identificação</a></li>
+                        <li><a href="{{url_for('contextorequisicao', user = 'cah204')}}">Contexto da Requisição</a></li>
                     </ul>
                 </div>
             </div>

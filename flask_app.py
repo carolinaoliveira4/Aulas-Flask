@@ -6,12 +6,16 @@ from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from datetime import datetime
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField, SelectField
 from wtforms.validators import DataRequired
 
 
 class NameForm(FlaskForm):
-  name = StringField('What is your name?', validators= [DataRequired()])
+  name = StringField('Informe o seu nome:', validators= [DataRequired()])
+  lastname = StringField('Informe o seu sobrenome:', validators= [DataRequired()])
+  inst = StringField('Informe a sua instituição de ensino:', validators= [DataRequired()])
+  disciplina = SelectField('Informe a sua disciplina:', choices=[('dswa5', 'DSWA5'), ('dsba4', 'DSBA4'), ('gproj', 'Gestão de Projetos')])
+
   submit = SubmitField('Submit')
 
 app = Flask(__name__)
@@ -25,10 +29,19 @@ def index():
     if form.validate_on_submit():
         old_name = session.get('name')
         if old_name is not None and old_name != form.name.data:
-            flash('Looks like you have changed your name!')
+            flash('Você alterou o seu nome!')
         session['name'] = form.name.data
         return redirect(url_for('index'))
-    return render_template('index.html', form = form, name = session.get('name'))
+    return render_template('index.html',
+                            form = form,
+                            name = session.get('name'),
+                            lastname = session.get('lastname'),
+                            inst = session.get('inst'),
+                            disciplina = session.get('disciplina'),
+                            host = request.url,
+                            ip = request.remote_addr,
+                            current_time=datetime.utcnow())
+
 
 
 @app.route('/user/<user>/<prontuario>/<inst>')
